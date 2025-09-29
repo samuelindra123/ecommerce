@@ -8,9 +8,10 @@ export async function POST(req: Request) {
     const body = await req.json().catch(()=>({}));
     views += 1;
     // Log minimal event for now (replace with real analytics / DB later)
-    console.log("[analytics] countdown view", { views, userAgent: (req.headers as any).get?.("user-agent"), clientSent: body?.clientTs });
+    const userAgent = req.headers.get("user-agent") || "";
+    console.log("[analytics] countdown view", { views, userAgent, clientSent: body?.clientTs });
     return NextResponse.json({ ok: true, views });
-  } catch (e) {
+  } catch (_err) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 }

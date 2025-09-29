@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { SiteHeader } from '../../components/SiteHeader';
-import { Footer } from '../../components/Footer';
 import { RoadmapTimeline } from '../../components/roadmap/RoadmapTimeline';
 
 export const metadata: Metadata = {
@@ -26,7 +25,6 @@ export default function RoadmapPage() {
           </div>
         </div>
       </main>
-
     </div>
   );
 }

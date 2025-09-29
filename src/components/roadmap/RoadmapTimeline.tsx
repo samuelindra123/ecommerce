@@ -13,7 +13,8 @@ const statusLabels: Record<RoadmapItem['status'], string> = {
 const statusOrder: RoadmapItem['status'][] = ['now','next','later','done'];
 
 export function RoadmapTimeline() {
-  const [active, setActive] = useState<RoadmapItem['status'] | 'all'>('now');
+  type FilterKey = RoadmapItem['status'] | 'all';
+  const [active, setActive] = useState<FilterKey>('now');
 
   const filtered = useMemo(() => {
     if (active === 'all') return roadmapItems;
@@ -23,10 +24,10 @@ export function RoadmapTimeline() {
   return (
     <div className="relative">
       <div className="flex flex-wrap gap-2 mb-8">
-        {(['now','next','later','done','all'] as const).map(s => (
+        {(['now','next','later','done','all'] as const).map((s: FilterKey) => (
           <button
             key={s}
-            onClick={() => setActive(s as any)}
+            onClick={() => setActive(s)}
             className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition backdrop-blur
               ${active === s ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]' : 'border-[var(--color-border)] dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-[var(--color-primary-soft)]/60'}
             `}
