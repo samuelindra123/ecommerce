@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* Palet 1: Modern & Terpercaya */
+:root {
+  --background: #ffffff; /* Base White */
+  --foreground: #1E293B; /* Slate 800 */
+  --color-primary: #3B82F6; /* Blue 500 */
+  --color-primary-foreground: #ffffff;
+  --color-primary-soft: #EFF6FF; /* Blue 50 */
+  --color-accent: #FBBF24; /* Amber 400 */
+  --color-accent-soft: #FFFBEB; /* Amber 50 */
+  --color-border: #E2E8F0; /* Slate 200 */
+  --color-muted: #64748B; /* Slate 500 */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #020617; /* Slate 950 */
+    --foreground: #F1F5F9; /* Slate 100 */
+    --color-primary: #3B82F6; /* Keep brand blue */
+    --color-primary-soft: #1E3A8A; /* Blue 900 */
+    --color-accent: #FBBF24;
+    --color-accent-soft: #78350F; /* Amber 900 */
+    --color-border: #334155; /* Slate 600 */
+    --color-muted: #94A3B8; /* Slate 400 */
+  }
+}
+
+/* Explicit dark mode override when .dark class present */
+.dark :root, .dark body, .dark {
+  --background: #020617; /* Slate 950 */
+  --foreground: #F1F5F9;
+  --color-primary: #3B82F6;
+  --color-primary-soft: #1E3A8A;
+  --color-accent: #FBBF24;
+  --color-accent-soft: #78350F;
+  --color-border: #334155;
+  --color-muted: #94A3B8;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  accent-color: var(--color-primary);
+}
+
+/* Twinkle animation for star field (optimized: opacity only) */
+@keyframes twinkle { 0%,100% { opacity: 0 } 45% { opacity: .9 } 55% { opacity: .95 } }
+.animate-twinkle { animation: twinkle 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-twinkle { animation: none; opacity: .4; }
+}
+
+/* Elegant professional subtle grid + noise helpers */
+.bg-grid-mask {
+  position: relative;
+}
+.bg-grid-mask::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--background), var(--background)),
+    repeating-linear-gradient(
+      to right,
+      rgba(30,41,59,0.08) 0 1px,
+      transparent 1px 80px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(30,41,59,0.08) 0 1px,
+      transparent 1px 80px
+    );
+  background-blend-mode: normal, lighten, lighten;
+  mask-image: radial-gradient(circle at 40% 35%, #000 0%, transparent 75%);
+  pointer-events: none;
+  opacity: 0.4;
+}
+.bg-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: .4;
+}
+
+/* Variant backgrounds */
+.variant-glass .card-surface { background: linear-gradient(145deg, rgba(255,255,255,0.7), rgba(255,255,255,0.45)); backdrop-filter: blur(18px) saturate(140%); }
+.dark .variant-glass .card-surface { background: linear-gradient(145deg, rgba(30,41,59,0.65), rgba(30,41,59,0.4)); }
+.variant-flat .no-glow [data-glow] { display: none; }
+.variant-flat .no-glow { background-image: linear-gradient(to bottom, var(--color-primary-soft), #fff 35%, var(--color-accent-soft)); }
+.variant-animated [data-glow] { animation: floatGlow 14s linear infinite; }
+.variant-focus .vignette { background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.4), transparent 60%); }
+.dark .variant-focus .vignette { background: radial-gradient(circle at 50% 40%, rgba(0,0,0,0.35), transparent 60%); }
+
+@keyframes floatGlow { 0% { transform: translateY(0) scale(1);} 50% { transform: translateY(-40px) scale(1.05);} 100% { transform: translateY(0) scale(1);} }
+
+/* Utility helpers for palette (optional) */
+.text-brand { color: var(--color-primary); }
+.bg-brand { background-color: var(--color-primary); }
+.border-brand { border-color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+.bg-accent { background-color: var(--color-accent); }
+.soft-card {
+  background: linear-gradient(
+    145deg,
+    var(--color-primary-soft) 0%,
+    #ffffff 60%,
+    var(--color-accent-soft) 100%
+  );
+}
